@@ -53,91 +53,57 @@ print(featured_image_full_url)
 
 ####Scraping Mars Facts Webpage for tabular data####
 
-# Visit the Mars Facts webpage [here](https://space-facts.com/mars/) and use Pandas to scrape the table containing facts about the planet including Diameter, Mass, etc.
-
-# In[48]:
-
+# Visit the Mars Facts webpage [here](https://space-facts.com/mars/) 
+# use pandas to scrape the table containing facts about the planet including Diameter, Mass, etc.
 
 ##Set up URL to read with pandas
-url = 'https://space-facts.com/mars/'
-
-
-# In[51]:
-
+facts_url = 'https://space-facts.com/mars/'
 
 ##Read tabular data from page w/pandas
-tables = pd.read_html(url)
-tables[0]
+tables = pd.read_html(facts_url)
+print(tables[0])
 
-
-# In[54]:
-
-
+### Transpose table to make it usable
 mars_facts = tables[0]
 mars_facts_transposed = mars_facts.transpose()
-mars_facts_transposed
-
-
-# In[55]:
-
+# print(mars_facts_transposed)
 
 ##Convert the data to an HTML table string
 mars_facts_transposed_html = mars_facts_transposed.to_html()
-mars_facts_transposed_html
+# print(mars_facts_transposed_html)
 
 
-# # Part 4: Mars Hemispheres
+####Scrape USGS for pictures of Mars Hemispheres###
 
-# Visit the USGS Astrogeology site [here](https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars) to obtain high resolution images for each of Mars' hemispheres.
-
-# ### Part 4A--Find Cerberus Image & Title
-
-# In[58]:
-
+####--Find Cerberus Image & Title
 
 ##Set up scraper for images of Mars' hemispheres, starting w/Cerberus
 # URL of page to be scraped
-url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
+cerberus_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
 
 # Retrieve page with the requests module
-response = requests.get(url)
+cerberus_response = requests.get(cerberus_url)
 # Create BeautifulSoup object; parse with 'lxml'
-soup = bs(response.text, 'lxml')
-
-
-# In[104]:
-
+cerberus_soup = bs(cerberus_response.text, 'lxml')
 
 ##Find title for cerberus hemisphere image
-cerberus_title = soup.find('title').text
+cerberus_title = cerberus_soup.find('title').text
 cerberus_title = cerberus_title.split('|')
 cerberus_title = cerberus_title[0]
-cerberus_title
-
-
-# In[93]:
-
+print(cerberus_title)
 
 ##Find URL for cerberus hemisphere image
-cerberus_hemisphere = soup.find_all('div', class_= 'wide-image-wrapper')
+cerberus_hemisphere = cerberus_soup.find_all('div', class_= 'wide-image-wrapper')
 cerberus_hemisphere = cerberus_hemisphere[0]
 cerberus_hemisphere = cerberus_hemisphere.find_all('img', class_='wide-image')
 cerberus_hemisphere = cerberus_hemisphere[0]
 cerberus_hemisphere = cerberus_hemisphere['src']
-cerberus_hemisphere
-
-
-# In[96]:
-
+print(cerberus_hemisphere)
 
 ##Save base URL to save all urls to images 
-base_url = 'https://astrogeology.usgs.gov/'
-cerberus_full_url = base_url + cerberus_hemisphere
-cerberus_full_url
-
-
-# In[105]:
-
+usgs_base_url = 'https://astrogeology.usgs.gov/'
+cerberus_full_url = usgs_base_url + cerberus_hemisphere
+print(cerberus_full_url)
 
 #Initialize dictionary to save url image and title
 hemisphere_image_urls = [
@@ -145,49 +111,34 @@ hemisphere_image_urls = [
 ]
 
 
-# ### Part 4B--Find Valles Marineris Hemisphere Image & Title
+######--Find Valles Marineris Hemisphere Image & Title
 
-# In[107]:
-
-
-##Set up scraper for images of Mars' hemispheres, now Marineris
+##Set up scraper for images of Mars' hemispheres, now Valles Marineris
 # URL of page to be scraped
-url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'
+valles_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'
 
 # Retrieve page with the requests module
-response = requests.get(url)
+response = requests.get(valles_url)
 # Create BeautifulSoup object; parse with 'lxml'
-soup = bs(response.text, 'lxml')
-
-
-# In[108]:
-
+valles_soup = bs(response.text, 'lxml')
 
 ##Find title for Valles Marineris hemisphere image
-valles_title = soup.find('title').text
+valles_title = valles_soup.find('title').text
 valles_title = valles_title.split('|')
 valles_title = valles_title[0]
 valles_title
 
-
-# In[109]:
-
-
 ##Find URL for valles hemisphere image
-valles_hemisphere = soup.find_all('div', class_= 'wide-image-wrapper')
+valles_hemisphere = valles_soup.find_all('div', class_= 'wide-image-wrapper')
 valles_hemisphere = valles_hemisphere[0]
 valles_hemisphere = valles_hemisphere.find_all('img', class_='wide-image')
 valles_hemisphere = valles_hemisphere[0]
 valles_hemisphere = valles_hemisphere['src']
-valles_hemisphere
-
-
-# In[110]:
-
+print(valles_hemisphere)
 
 ##Construct full image URL
-valles_full_url = base_url + valles_hemisphere
-valles_full_url
+valles_full_url = usgs_base_url + valles_hemisphere
+print(valles_full_url)
 
 
 # In[112]:
