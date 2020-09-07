@@ -41,22 +41,17 @@ browser.visit(jpl_url)
 ##Find image URL of featured image 
 jpl_html = browser.html
 jpl_soup = bs(jpl_html, 'html.parser')
-featured_image_container = jpl_soup.find_all('div', class_='fancybox-wrap fancybox-dark fancybox-type-image fancybox-desktop fancybox-dark-desktop fancybox-open')
-featured_image_container = featured_image_container[0]
-featured_image = featured_image_container.find_all('img')
+featured_image_rel_path = jpl_soup.find_all('img')[3]["src"]
+print(featured_image_rel_path)
 
-##Parse featured_image object to be complete image url
-##just appending https://www.jpl.nasa.gov to beginning
-image_source = featured_image[0]['src']
-print(image_source)
+##append base url for JPL to featured image
 jpl_base_url = 'https://www.jpl.nasa.gov'
 
 ##Concatenate base_url and image url
-featured_image_full_url = jpl_base_url + image_source
-featured_image_full_url
+featured_image_full_url = jpl_base_url + featured_image_rel_path
+print(featured_image_full_url)
 
-
-# # Part 3: Mars Facts
+####Scraping Mars Facts Webpage for tabular data####
 
 # Visit the Mars Facts webpage [here](https://space-facts.com/mars/) and use Pandas to scrape the table containing facts about the planet including Diameter, Mass, etc.
 
