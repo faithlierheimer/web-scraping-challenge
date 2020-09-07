@@ -38,6 +38,7 @@ browser = Browser('chrome', **executable_path, headless=False)
 jpl_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
 browser.visit(jpl_url)
 
+####COME BACK TO THIS##############
 ##Find image URL of featured image 
 jpl_html = browser.html
 jpl_soup = bs(jpl_html, 'html.parser')
@@ -140,123 +141,78 @@ print(valles_hemisphere)
 valles_full_url = usgs_base_url + valles_hemisphere
 print(valles_full_url)
 
-
-# In[112]:
-
-
 ##Add to dictionary
 hemisphere_image_urls.append({"title": valles_title, "img_url": valles_full_url})
-hemisphere_image_urls
+print(hemisphere_image_urls)
 
 
-# ### Part 4C--Find Schiaparelli Hemisphere Image & Title
-
-# In[113]:
-
-
+#####---Find Schiaparelli Hemisphere Image & Title
 ##Set up scraper for images of Mars' hemispheres, now Schiaparelli
 # URL of page to be scraped
-url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
+schiaparelli_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
 
 # Retrieve page with the requests module
-response = requests.get(url)
+schiaparelli_response = requests.get(schiaparelli_url)
 # Create BeautifulSoup object; parse with 'lxml'
-soup = bs(response.text, 'lxml')
-
-
-# In[114]:
-
+schiaparelli_soup = bs(schiaparelli_response.text, 'lxml')
 
 ##Find title for Schiaparelli Hemisphere image
-schiaparelli_title = soup.find('title').text
+schiaparelli_title = schiaparelli_soup.find('title').text
 schiaparelli_title = schiaparelli_title.split('|')
 schiaparelli_title = schiaparelli_title[0]
-schiaparelli_title
-
-
-# In[115]:
-
+print(schiaparelli_title)
 
 ##Find URL for schiaparelli hemisphere image
-schiaparelli_hemisphere = soup.find_all('div', class_= 'wide-image-wrapper')
+schiaparelli_hemisphere = schiaparelli_soup.find_all('div', class_= 'wide-image-wrapper')
 schiaparelli_hemisphere = schiaparelli_hemisphere[0]
 schiaparelli_hemisphere = schiaparelli_hemisphere.find_all('img', class_='wide-image')
 schiaparelli_hemisphere = schiaparelli_hemisphere[0]
 schiaparelli_hemisphere = schiaparelli_hemisphere['src']
-schiaparelli_hemisphere
-
-
-# In[116]:
-
+print(schiaparelli_hemisphere)
 
 ##Construct full image URL
-schiaparelli_full_url = base_url + schiaparelli_hemisphere
+schiaparelli_full_url = usgs_base_url + schiaparelli_hemisphere
 schiaparelli_full_url
-
-
-# In[117]:
-
 
 ##Add to dictionary
 hemisphere_image_urls.append({"title": schiaparelli_title, "img_url": schiaparelli_full_url})
-hemisphere_image_urls
+print(hemisphere_image_urls)
 
-
-# ### Part 4D--Find Syrtis Major Hemisphere Image & Title
-
-# In[118]:
-
+#####---Find Syrtis Major Hemisphere Image & Title
 
 ##Set up scraper for images of Mars' hemispheres, now Syrtis Major
 # URL of page to be scraped
-url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'
+syrtis_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'
 
 # Retrieve page with the requests module
-response = requests.get(url)
+syrtis_response = requests.get(syrtis_url)
 # Create BeautifulSoup object; parse with 'lxml'
-soup = bs(response.text, 'lxml')
-
-
-# In[119]:
-
+syrtis_soup = bs(response.text, 'lxml')
 
 ##Find title for Syrtis Major Hemisphere image
-syrtis_title = soup.find('title').text
+syrtis_title = syrtis_soup.find('title').text
 syrtis_title = syrtis_title.split('|')
 syrtis_title = syrtis_title[0]
-syrtis_title
+print(syrtis_title)
 
 
 # In[120]:
 
 
 ##Find URL for Syrtis Major hemisphere image
-syrtis_hemisphere = soup.find_all('div', class_= 'wide-image-wrapper')
+syrtis_hemisphere = syrtis_soup.find_all('div', class_= 'wide-image-wrapper')
 syrtis_hemisphere = syrtis_hemisphere[0]
 syrtis_hemisphere = syrtis_hemisphere.find_all('img', class_='wide-image')
 syrtis_hemisphere = syrtis_hemisphere[0]
 syrtis_hemisphere = syrtis_hemisphere['src']
-syrtis_hemisphere
-
-
-# In[121]:
-
+print(syrtis_hemisphere)
 
 ##Construct full image URL
-syrtis_full_url = base_url + syrtis_hemisphere
+syrtis_full_url = usgs_base_url + syrtis_hemisphere
 syrtis_full_url
-
-
-# In[122]:
-
 
 ##Add to dictionary
 hemisphere_image_urls.append({"title": syrtis_title, "img_url": syrtis_full_url})
-hemisphere_image_urls
-
-
-# In[ ]:
-
-
+print(hemisphere_image_urls)
 
 
