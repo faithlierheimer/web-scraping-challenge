@@ -6,79 +6,53 @@ import requests
 import pymongo
 from splinter import Browser
 
-
-
+####SCRAPING CODE#######
+##Scraping NASA for most recent news story###
 # URL of page to be scraped
-url = 'https://mars.nasa.gov/news/'
+nasa_news_url = 'https://mars.nasa.gov/news/'
 # Retrieve page with the requests module
-response = requests.get(url)
+news_response = requests.get(nasa_news_url)
 # Create BeautifulSoup object; parse with 'lxml'
-soup = bs(response.text, 'lxml')
+news_soup = bs(news_response.text, 'lxml')
 #Find first headline to collect latest news title and paragraph text.
-headlines = soup.find_all('div', class_='content_title')
+headlines = news_soup.find_all('div', class_='content_title')
 latest_news_title = headlines[0].text
-latest_news_title = latest_title.strip()
-latest_news_title3
-
-
-# In[27]:
-
+latest_news_title = latest_news_title.strip()
+print(latest_news_title)
 
 ##Find paragraph text of first article
-paragraph = soup.find_all('div', class_='image_and_description_container')
+paragraph = news_soup.find_all('div', class_='image_and_description_container')
 #paragraph_latest_news = 
 first_article = paragraph[0]
 first_article_description = first_article.find('div', class_='rollover_description_inner')
 first_article_description = first_article_description.text.strip()
-first_article_description
+print(first_article_description)
 
-
-# # Part Two: Scrape JPL for featured image
-
-# Visit the url for JPL Featured Space Image [here](https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars). Use splinter to navigate the site and find the image url for the current Featured Mars Image and assign the url string to a variable called `featured_image_url`.
-
-# In[33]:
-
+##### Scraping JPL for featured space image #####
 
 ##Set up splinter to visit the URL for JPL featured space image 
 executable_path = {'executable_path': r'C:\Program Files\Chromedriver\chromedriver.exe'}
 browser = Browser('chrome', **executable_path, headless=False)
 
-
-# In[34]:
-
-
 ##Set up URL to visit using chromedriver
-url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
-browser.visit(url)
-
-
-# In[39]:
-
+jpl_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
+browser.visit(jpl_url)
 
 ##Find image URL of featured image 
-html = browser.html
-soup = bs(html, 'html.parser')
+jpl_html = browser.html
+soup = bs(jpl_html, 'html.parser')
 featured_image = soup.find_all('img', class_='fancybox-image')
-featured_image 
-
-
-# In[46]:
-
+print(featured_image)
 
 ##Parse featured_image object to be complete image url
 ##just appending https://www.jpl.nasa.gov to beginning
-image = featured_image[0]['src']
-image
-base_url = 'https://www.jpl.nasa.gov'
-
-
-# In[47]:
-
+image_source = featured_image[0]['src']
+print(image_source)
+jpl_base_url = 'https://www.jpl.nasa.gov'
 
 ##Concatenate base_url and image url
-full_url = base_url + image
-full_url
+featured_image_full_url = jpl_base_url + image_source
+featured_image_full_url
 
 
 # # Part 3: Mars Facts
