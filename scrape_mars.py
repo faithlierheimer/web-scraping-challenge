@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup as bs
 import pandas as pd 
 import requests
 import pymongo 
+from pymongo import MongoClient
 import time
 
 ##Set up splinter to visit the URL for JPL featured space image 
@@ -213,4 +214,11 @@ def scrape():
         "hemisphere_images": hemisphere_image_urls
 
     }
+    #Load data into mongodb 
+    mongo_mars_docs = []
+    mongo_mars_docs += [mars_info_dict]
+    cluster = MongoClient("mongodb://localhost:27107/mars_data")
+    db = cluster['mars_data']
+    collection = db['mars_data']
+    collection.insert_many(mongo_mars_docs)
     return mars_info_dict
