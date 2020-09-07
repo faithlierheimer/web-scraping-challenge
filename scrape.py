@@ -1,6 +1,4 @@
 
-
-
 #Import dependencies
 import pandas as pd
 from bs4 import BeautifulSoup as bs
@@ -9,12 +7,7 @@ import pymongo
 from splinter import Browser
 
 
-# Initialize PyMongo to work with MongoDBs
-conn = 'mongodb://localhost:27017'
-client = pymongo.MongoClient(conn)
-# Define database and collection
-db = client.mars_db
-collection = db.news
+
 # URL of page to be scraped
 url = 'https://mars.nasa.gov/news/'
 # Retrieve page with the requests module
@@ -25,7 +18,7 @@ soup = bs(response.text, 'lxml')
 headlines = soup.find_all('div', class_='content_title')
 latest_news_title = headlines[0].text
 latest_news_title = latest_title.strip()
-latest_news_title
+latest_news_title3
 
 
 # In[27]:
