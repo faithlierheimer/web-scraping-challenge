@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 import pymongo
 from splinter import Browser
+import time
 
 ####SCRAPING CODE#######
 ##Scraping NASA for most recent news story###
@@ -37,12 +38,15 @@ browser = Browser('chrome', **executable_path, headless=False)
 ##Set up URL to visit using chromedriver
 jpl_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
 browser.visit(jpl_url)
-
-####COME BACK TO THIS##############
+#Click 'full image'
+browser.click_link_by_partial_text('FULL IMAGE')
+time.sleep(5)
+#Go to 'more info'
+browser.click_link_by_partial_text('more info')
 ##Find image URL of featured image 
 jpl_html = browser.html
 jpl_soup = bs(jpl_html, 'html.parser')
-featured_image_rel_path = jpl_soup.find_all('img')[3]["src"]
+featured_image_rel_path = jpl_soup.find('figure', class_='lede').a['href']
 print(featured_image_rel_path)
 
 ##append base url for JPL to featured image
@@ -72,7 +76,10 @@ mars_facts_transposed = mars_facts.transpose()
 ##Convert the data to an HTML table string
 mars_facts_transposed_html = mars_facts_transposed.to_html()
 # print(mars_facts_transposed_html)
-
+##Export HTML table to its own file for later use
+html_table_file = open("table.html", "w")
+html_table_file.write(mars_facts_transposed_html)
+html_table_file.close()
 
 ####Scrape USGS for pictures of Mars Hemispheres###
 
