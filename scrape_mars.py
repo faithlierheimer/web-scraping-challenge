@@ -8,11 +8,9 @@ from pymongo import MongoClient
 import time
 
 ##Set up splinter to visit the URL for JPL featured space image 
-def init_browser():
-    executable_path = {'executable_path': r'C:\Program Files\Chromedriver\chromedriver.exe'}
-    return Browser('chrome', **executable_path, headless=False)
 def scrape():
-    browser = init_browser()
+    executable_path = {'executable_path': r'C:\Program Files\Chromedriver\chromedriver.exe'}
+    browser = Browser('chrome', **executable_path, headless=False)
     #### Mars News Scraping Code
     # URL of page to be scraped
     nasa_news_url = 'https://mars.nasa.gov/news/'
@@ -34,9 +32,6 @@ def scrape():
     first_article_description
 
     ##Scraping JPL for featured JPL image
-    ##Set up splinter to visit the URL for JPL featured space image 
-    executable_path = {'executable_path': r'C:\Program Files\Chromedriver\chromedriver.exe'}
-    browser = Browser('chrome', **executable_path, headless=False)
 
     ##Set up URL to visit using chromedriver
     jpl_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -50,12 +45,14 @@ def scrape():
     jpl_html = browser.html
     jpl_soup = bs(jpl_html, 'html.parser')
     featured_image_rel_path = jpl_soup.find('figure', class_='lede').a['href']
+    
 
     ##append base url for JPL to featured image
     jpl_base_url = 'https://www.jpl.nasa.gov'
 
     ##Concatenate base_url and image url
     featured_image_full_url = jpl_base_url + featured_image_rel_path
+    browser.quit()
     ####Scraping Mars Facts Webpage for tabular data####
 
     ##Set up URL to read with pandas
@@ -214,11 +211,11 @@ def scrape():
         "hemisphere_images": hemisphere_image_urls
 
     }
-    #Load data into mongodb 
-    mongo_mars_docs = []
-    mongo_mars_docs += [mars_info_dict]
-    cluster = MongoClient("mongodb://localhost:27107/mars_data")
-    db = cluster['mars_data']
-    collection = db['mars_data']
-    collection.insert_many(mongo_mars_docs)
+    # #Load data into mongodb 
+    # mongo_mars_docs = []
+    # mongo_mars_docs += [mars_info_dict]
+    # cluster = MongoClient("mongodb://localhost:27107/mars_data")
+    # db = cluster['mars_data']
+    # collection = db['mars_data']
+    # collection.insert_many(mongo_mars_docs)
     return mars_info_dict

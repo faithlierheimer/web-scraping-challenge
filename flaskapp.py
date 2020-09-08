@@ -5,32 +5,29 @@ import requests
 from flask_pymongo import PyMongo
 from splinter import Browser
 from flask import Flask, render_template, redirect
-from scrape_mars import init_browser, scrape
-# # Initialize PyMongo to work with MongoDBs
-# conn = 'mongodb://localhost:27017'
-# client = pymongo.MongoClient(conn)
-# # Define database and collection
-# db = client.mars_db
-# collection = db.mars
+import scrape_mars
 
 ####Begin flask app routes######
 app = Flask(__name__)
-app.config['MONGO_URI'] = "mongodb://localhost:27017/mars_data"
+app.config['MONGO_URI'] = "mongodb://localhost:27017/mars_db"
 mongo = PyMongo(app)
+
 @app.route("/")
 def index():
-    mars_data = mongo.db.mongo_mars_docs.find_one()
+    ## line 18 is creating the collection mars_data
+    ##maybe pymongo is the issue? keep getting name error "mars_data is not defined when it is in line 19"
+    mars_data = mongo.db.mars_data.find_one()
     return render_template("index.html", mars_data = mars_data)
 
 @app.route("/scrape")
-#When I launch this one it launches scrape like 12 times before it actually does what I want
-#I think the first issues is importing things into mongo--do i do that before the flask app? 
 def scraper():
     #Run scrape fxn
-    init_browser()
-    mars_dict = mongo.db.mongo_mars_docs
-    mars_info = scrape()
-    return mars_info
+    # mars_dict = mongo.db.mongo_mars_docs
+    mars_data = mongo.db.mars_data
+    mars_stuff = scrape_mars.scrape()
+    #line 27 is inserting the results of the scraper into my collection
+    mars_data.update({}, mars_stuff, upsert = True)
+    return redirect("/", code=302)
 
 if __name__ == "__main__":
     app.run(debug=True)
