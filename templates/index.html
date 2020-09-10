@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Is there Life on Mars??????</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -19,7 +20,7 @@
     <img src="C:\Users\flier\Desktop\web-scraping-challenge\mars_landscape.jpg" alt="Mars">
     <h2>Here's some interesting Mars Facts!</h2>
     <h3>Latest News Headline: {{ mars_data.latest_news_title }}</h3>
-    <h3>Most Recent Featured Photo {{ mars_data.featured_image_url }}</h3>
+    <h3>Most Recent Featured Photo <img src="{{mars_data.featured_image_url }}" > </h3>
   </div>
   </div>
 </body>

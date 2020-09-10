@@ -20,6 +20,7 @@ def index():
     return render_template("index.html", mars_data = mars_data)
 
 @app.route("/scrape")
+##Somehow this is opening a bunch of browsers and breaking again. :() But it does work? like it scraped the new image, it just took forever?
 def scraper():
     #Run scrape fxn
     # mars_dict = mongo.db.mongo_mars_docs
