@@ -15,7 +15,6 @@ mongo = PyMongo(app)
 @app.route("/")
 def index():
     ## line 18 is creating the collection mars_data
-    ##maybe pymongo is the issue? keep getting name error "mars_data is not defined when it is in line 19"
     mars_data = mongo.db.mars_data.find_one()
     return render_template("index.html", mars_data = mars_data)
 
@@ -24,6 +23,7 @@ def index():
 def scraper():
     #Run scrape fxn
     # mars_dict = mongo.db.mongo_mars_docs
+
     mars_data = mongo.db.mars_data
     mars_stuff = scrape_mars.scrape()
     #line 27 is inserting the results of the scraper into my collection

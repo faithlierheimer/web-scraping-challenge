@@ -37,10 +37,10 @@ def scrape():
     jpl_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(jpl_url)
     #Click 'full image'
-    browser.click_link_by_partial_text('FULL IMAGE')
+    browser.find_link_by_partial_text('FULL IMAGE').click()
     time.sleep(5)
     #Go to 'more info'
-    browser.click_link_by_partial_text('more info')
+    browser.find_link_by_partial_text('more info').click()
     ##Find image URL of featured image 
     jpl_html = browser.html
     jpl_soup = bs(jpl_html, 'html.parser')
@@ -207,7 +207,7 @@ def scrape():
         "latest_news_title": latest_news_title,
         "latest_news_paragraph": first_article_description,
         "featured_image_url": featured_image_full_url,
-        "mars_facts_table": str(mars_facts_transposed_html),
+        "mars_facts_table": mars_facts_transposed_html,
         "hemisphere_images": hemisphere_image_urls
 
     }
@@ -218,4 +218,25 @@ def scrape():
     # db = cluster['mars_data']
     # collection = db['mars_data']
     # collection.insert_many(mongo_mars_docs)
+    return mars_info_dict
+
+def scrape_2(): 
+    executable_path = {'executable_path': r'C:\Program Files\Chromedriver\chromedriver.exe'}
+    browser = Browser('chrome', **executable_path, headless=False)
+    nasa_news_url = 'https://mars.nasa.gov/news/'
+    # Retrieve page with the requests module
+    news_response = requests.get(nasa_news_url)
+    time.sleep(5)
+    browser.quit()
+    schiaparelli_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
+
+    # Retrieve page with the requests module
+    schiaparelli_response = requests.get(schiaparelli_url)
+    mars_info_dict = {
+        "latest_news_title": 'test',
+        "latest_news_paragraph": 'test',
+        "featured_image_url": 'test',
+        "mars_facts_table": 'test',
+        "hemisphere_images": 'test'
+    }
     return mars_info_dict

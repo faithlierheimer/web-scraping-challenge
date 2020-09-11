@@ -17,10 +17,17 @@
       <p>There's interesting facts. There's gorgeous hemispheres. There's amazing scenery.</p>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Mars Data!</a></p>
     </div>
-    <img src="C:\Users\flier\Desktop\web-scraping-challenge\mars_landscape.jpg" alt="Mars">
+    <!--why won't this image render???-->
+    <img src="mars_landscape.jpg" alt="Mars">
     <h2>Here's some interesting Mars Facts!</h2>
+    <!--WHy is this rendering as raw html instead of a gable?-->
+    {{ mars_data.mars_facts_table }}
     <h3>Latest News Headline: {{ mars_data.latest_news_title }}</h3>
     <h3>Most Recent Featured Photo <img src="{{mars_data.featured_image_url }}" > </h3>
+    <br/>
+    <h3>Ever wondered whar Mars' Hemispheres Look Like?</h3>
+    <!--How to get these images to render? hemisphere_images is a subdictionary in the mars data dict...-->
+    <h5><img src="{{mars_data.hemisphere_images["img_url"]}}"></h5>
   </div>
   </div>
 </body>
