@@ -1,9 +1,12 @@
-img {
-    width: 100%;
-    height: auto;
+.img {
+    width: 50%;
+    height: 50%;
   }
 
-body {
-    background-color: rgb(11, 12, 12);
+.body {
+    background-color: rgb(57, 105, 105);
   }
 
+.box {
+  background-color: azure;
+}
