@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Is there Life on Mars??????</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/mainpage.css') }}">
 </head>
 
 <body>
@@ -17,17 +17,18 @@
       <p>There's interesting facts. There's gorgeous hemispheres. There's amazing scenery.</p>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Mars Data!</a></p>
     </div>
-    <!--why won't this image render???-->
-    <img src="mars_landscape.jpg" alt="Mars">
-    <h2>Here's some interesting Mars Facts!</h2>
-    <!--WHy is this rendering as raw html instead of a gable?-->
-    {{ mars_data.mars_facts_table }}
+  <div class="container-fluid">
+    <div class="box">
+      <h2>Get to Know Mars</h2>
+      {{ mars_data.mars_facts_table | safe }}
+    </div>
+  </div>
     <h3>Latest News Headline: {{ mars_data.latest_news_title }}</h3>
     <h3>Most Recent Featured Photo <img src="{{mars_data.featured_image_url }}" > </h3>
     <br/>
     <h3>Ever wondered whar Mars' Hemispheres Look Like?</h3>
     <!--How to get these images to render? hemisphere_images is a subdictionary in the mars data dict...-->
-    <h5><img src="{{mars_data.hemisphere_images["img_url"]}}"></h5>
+    <img src = "{{mars_data.hemisphere_images[0]['img_url']}}">
   </div>
   </div>
 </body>
