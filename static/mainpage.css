@@ -10,3 +10,9 @@
 .box {
   background-color: azure;
 }
+
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}

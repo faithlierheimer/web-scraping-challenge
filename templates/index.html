@@ -18,29 +18,45 @@
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Mars Data!</a></p>
     </div>
   </div>
-  <div class="container-fluid">
-    <div class="box" style = "background-color: white; width: 100%;">
-      <h2>Get to Know Mars!</h2>
-      {{ mars_data.mars_facts_table | safe }}
+  <div class="container">
+    <div class="row">
+      <div class="col-9" style = "background-color: white; width: 100%;">
+        <h2>Get to Know Mars!</h2>
+            {{ mars_data.mars_facts_table | safe }}
+      </div>
+      <div class="col-3" style="background-color: white; width: 50%;">
+        <h3>Latest <a href="https://mars.nasa.gov/news/">News</a> Headline: 
+        {{ mars_data.latest_news_title }}</h3>
+        <h4> {{ mars_data.latest_news_paragraph }} </h4>
+      </div>
     </div>
   </div>
-  <!--figure out putting some space between these boxes-->
-  <div class="container-fluid" style="background-color: white; width: 50%;">
-    <h3>Latest <a href="https://mars.nasa.gov/news/">News</a> Headline: 
-      {{ mars_data.latest_news_title }}</h3>
-    <h4> {{ mars_data.latest_news_paragraph }} </h4>
-  </div>
-  <div class="container-fluid" style="background-color: white;">
-    <h3>Most Recent Featured Photo <img src="{{mars_data.featured_image_url }}" > </h3>
-    <br/>
-  </div>
-  <div class="container-fluid" style="background-color: white;">
-    <h3>Ever wondered whar Mars' Hemispheres Look Like?</h3>
-    <!--How to get these images to render? hemisphere_images is a subdictionary in the mars data dict...-->
-    <img src = "{{mars_data.hemisphere_images[0]['img_url']}}">
-    <img src = "{{mars_data.hemisphere_images[1]['img_url']}}">
-    <img src = "{{mars_data.hemisphere_images[2]['img_url']}}">
-    <img src = "{{mars_data.hemisphere_images[3]['img_url']}}">
+
+  <div class="container" style="background-color: rgb(17, 17, 17);">
+    <div class="row">
+      <div class="col-12">
+        <h3 style="color: white;">Most Recent Featured Photo 
+          </br>
+          <img src="{{mars_data.featured_image_url }}" width="50%" height="50%"> </h3>
+      </div>
+    </div>
+    <div class="row">
+      <h3 style="color: white;">High-definition photos of Mars' hemispheres</h3>
+    </div>
+    <div class="row">
+      <div class="column" style="column-gap: 40 px;">
+        <img src = "{{mars_data.hemisphere_images[0]['img_url']}}" width="75%" height="75%">
+      </div>
+      <div class="column" style="column-gap: 40 px;">
+        <img src = "{{mars_data.hemisphere_images[1]['img_url']}}" width="75%" height="75%">
+      </div>
+      <div class="column" style="column-gap: 40 px;">
+        <img src = "{{mars_data.hemisphere_images[2]['img_url']}}" width="75%" height="75%">
+      </div>
+      <div class="column" style="column-gap: 40 px;">
+        <img src = "{{mars_data.hemisphere_images[3]['img_url']}}" width="75%" height="75%">
+      </div>
+    </div>
   </div>
 </body>
 
